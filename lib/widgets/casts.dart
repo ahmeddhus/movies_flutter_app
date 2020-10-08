@@ -1,9 +1,11 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_flutter_app/bloc/get_casts_bloc.dart';
 import 'package:movies_flutter_app/model/cast.dart';
 import 'package:movies_flutter_app/model/cast_response.dart';
 import 'package:movies_flutter_app/style/theme.dart' as Style;
+import 'package:movies_flutter_app/widgets/person_info.dart';
 
 class Casts extends StatefulWidget {
   final int id;
@@ -123,6 +125,8 @@ class _CastsState extends State<Casts> {
               padding: EdgeInsets.only(top: 10.0, right: 8.0),
               child: GestureDetector(
                 onTap: () {
+                  personsDialog(casts[index]);
+
                   // Navigator.push(
                   //     context,
                   //     MaterialPageRoute(
@@ -141,7 +145,7 @@ class _CastsState extends State<Casts> {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: NetworkImage(
-                              "https://image.tmdb.org/t/p/w500"+
+                              "https://image.tmdb.org/t/p/w500" +
                                   casts[index].img),
                         ),
                       ),
@@ -162,7 +166,6 @@ class _CastsState extends State<Casts> {
                     SizedBox(
                       height: 10.0,
                     ),
-
                     Text(
                       casts[index].character,
                       textAlign: TextAlign.center,
@@ -180,5 +183,30 @@ class _CastsState extends State<Casts> {
         ),
       );
     }
+  }
+
+  personsDialog(Cast data) {
+    AwesomeDialog(
+      context: context,
+      animType: AnimType.SCALE,
+      dialogType: DialogType.INFO,
+      headerAnimationLoop: false,
+      customHeader: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage("https://image.tmdb.org/t/p/w500" + data.img),
+          ),
+        ),
+      ),
+      body: Center(
+        child: PersonInfo(id: data.id),
+      ),
+      title: '${data.name}',
+      desc: '${data.name}',
+      btnOkColor: Style.Colors.secondColor,
+      btnOkOnPress: () {},
+    )..show();
   }
 }

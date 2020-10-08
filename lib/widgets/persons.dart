@@ -1,9 +1,11 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movies_flutter_app/bloc/get_persons_bloc.dart';
 import 'package:movies_flutter_app/model/person.dart';
 import 'package:movies_flutter_app/model/person_response.dart';
 import 'package:movies_flutter_app/style/theme.dart' as Style;
+import 'package:movies_flutter_app/widgets/person_info.dart';
 
 class PersonsList extends StatefulWidget {
   @override
@@ -105,66 +107,107 @@ class _PersonsListState extends State<PersonsList> {
           itemCount: persons.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            return Container(
-              width: 100.0,
-              padding: EdgeInsets.only(top: 10.0, right: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  persons[index].profileImg == null
-                      ? Container(
-                          width: 70.0,
-                          height: 70.0,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Style.Colors.secondColor,
-                          ),
-                          child: Icon(
-                            FontAwesomeIcons.userAlt,
-                            color: Colors.white,
-                          ),
-                        )
-                      : Container(
-                          width: 70.0,
-                          height: 70.0,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  "https://image.tmdb.org/t/p/w500" +
-                                      persons[index].profileImg),
+            return GestureDetector(
+              onTap: () {
+                personsDialog(persons[index]);
+
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => PersonInfoScreen(
+                //               id: persons[index].id,
+                //             )));
+              },
+              child: Container(
+                width: 100.0,
+                padding: EdgeInsets.only(top: 10.0, right: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    persons[index].profileImg == null
+                        ? Container(
+                            width: 70.0,
+                            height: 70.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Style.Colors.secondColor,
+                            ),
+                            child: Icon(
+                              FontAwesomeIcons.userAlt,
+                              color: Colors.white,
+                            ),
+                          )
+                        : Container(
+                            width: 70.0,
+                            height: 70.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                    "https://image.tmdb.org/t/p/w500" +
+                                        persons[index].profileImg),
+                              ),
                             ),
                           ),
-                        ),
-                   SizedBox(height: 10.0,),
-                  Text(
-                    persons[index].name,
-                    maxLines: 2,
-                    style: TextStyle(
-                      height: 1.4,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 9.0,
+                    SizedBox(
+                      height: 10.0,
                     ),
-                  ),
-                  SizedBox(height: 3.0,),
-                  Text(
-                    "Trending for ${persons[index].known}",
-                    maxLines: 2,
-                    style: TextStyle(
-                      height: 1.4,
-                      color: Style.Colors.titleColor,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 7.0,
+                    Text(
+                      persons[index].name,
+                      maxLines: 2,
+                      style: TextStyle(
+                        height: 1.4,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 9.0,
+                      ),
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: 3.0,
+                    ),
+                    Text(
+                      "Trending for ${persons[index].known}",
+                      maxLines: 2,
+                      style: TextStyle(
+                        height: 1.4,
+                        color: Style.Colors.titleColor,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 7.0,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },
         ),
       );
     }
+  }
+
+  personsDialog(Person data) {
+    AwesomeDialog(
+      context: context,
+      animType: AnimType.SCALE,
+      dialogType: DialogType.INFO,
+      headerAnimationLoop: false,
+      customHeader: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+              fit: BoxFit.cover,
+              image: NetworkImage(
+                  "https://image.tmdb.org/t/p/w500" + data.profileImg)),
+        ),
+      ),
+      body: Center(
+        child: PersonInfo(id: data.id),
+      ),
+      title: '${data.name}',
+      desc: '${data.name}',
+      btnOkColor: Style.Colors.secondColor,
+      btnOkOnPress: () {},
+    )..show();
   }
 }

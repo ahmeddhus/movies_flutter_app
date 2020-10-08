@@ -3,6 +3,7 @@ import 'package:movies_flutter_app/model/cast_response.dart';
 import 'package:movies_flutter_app/model/genre_response.dart';
 import 'package:movies_flutter_app/model/movie_detail_response.dart';
 import 'package:movies_flutter_app/model/movies_response.dart';
+import 'package:movies_flutter_app/model/person_info_response.dart';
 import 'package:movies_flutter_app/model/person_response.dart';
 import 'package:movies_flutter_app/model/video_response.dart';
 
@@ -16,6 +17,7 @@ class MovieRepository {
   var getPlayingUrl = '$mainUrl/movie/now_playing';
   var getGenresUrl = '$mainUrl/genre/movie/list';
   var getPersonsUrl = '$mainUrl/trending/person/week';
+  var getPersonInfoUrl = '$mainUrl/person';
   var movieUrl = '$mainUrl/movie';
 
   Future<MoviesResponse> getMovies() async {
@@ -68,6 +70,22 @@ class MovieRepository {
     } catch (error, stacktrace) {
       print("Exception occurred: $error stacktrace: $stacktrace");
       return PersonResponse.withError("$error");
+    }
+  }
+
+  Future<PersonInfoResponse> getPersonInfo(int id) async {
+    var params = {
+      "api_key": apiKey,
+      "language": "en-US",
+    };
+
+    try {
+      Response response =
+          await _dio.get(getPersonInfoUrl + "/$id", queryParameters: params);
+      return PersonInfoResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occurred: $error stacktrace: $stacktrace");
+      return PersonInfoResponse.withError("error");
     }
   }
 
