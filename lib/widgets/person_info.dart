@@ -126,9 +126,16 @@ class _PersonInfoState extends State<PersonInfo> {
               SizedBox(
                 height: 10.0,
               ),
-              Text(
-                '${data.biography}',
-                style: TextStyle(fontSize: 16.0, color: Style.Colors.mainColor),
+              Container(
+                height: 200,
+                width: 300,
+                child: SingleChildScrollView(
+                  child: Text(
+                    '${data.biography}',
+                    style: TextStyle(
+                        fontSize: 16.0, color: Style.Colors.mainColor),
+                  ),
+                ),
               ),
             ],
           ),
