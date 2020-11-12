@@ -2,21 +2,32 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:movies_flutter_app/bloc/get_movies_bloc.dart';
+import 'package:movies_flutter_app/bloc/get_searched_movies_bloc.dart';
 import 'package:movies_flutter_app/model/movie.dart';
 import 'package:movies_flutter_app/model/movies_response.dart';
 import 'package:movies_flutter_app/screens/detail_screen.dart';
 import 'package:movies_flutter_app/style/theme.dart' as Style;
 
 class TopMovies extends StatefulWidget {
+  final String query;
+
+  TopMovies({Key key, @required this.query}) : super(key: key);
+
+
   @override
-  _TopMoviesState createState() => _TopMoviesState();
+  _TopMoviesState createState() => _TopMoviesState(query);
 }
 
 class _TopMoviesState extends State<TopMovies> {
+  final String query;
+
+  _TopMoviesState(this.query);
+
   @override
   void initState() {
     super.initState();
     moviesBloc.getMovies();
+    searchedMoviesBloc.getSearchedMovies(query);
   }
 
   @override
@@ -39,7 +50,7 @@ class _TopMoviesState extends State<TopMovies> {
           height: 5.0,
         ),
         StreamBuilder<MoviesResponse>(
-            stream: moviesBloc.subject.stream,
+            stream: searchedMoviesBloc.subject.stream,
             builder: (contex, AsyncSnapshot<MoviesResponse> snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data.error != null &&

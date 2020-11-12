@@ -6,21 +6,24 @@ import 'package:movies_flutter_app/widgets/now_playing.dart';
 import 'package:movies_flutter_app/widgets/persons.dart';
 import 'package:movies_flutter_app/widgets/top_movies.dart';
 
-class HomeScreen extends StatefulWidget {
+class SearchScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SearchScreenState extends State<SearchScreen> {
   Icon _searchIcon = new Icon(EvaIcons.searchOutline, color: Colors.white);
-  Widget _appBarTitle = new Text('Movies App');
+  Widget _appBarTitle = new Text('Search');
   final TextEditingController _search = new TextEditingController();
   bool search = true;
+
 
   @override
   void initState() {
     super.initState();
-    _search.addListener(() {});
+    _search.addListener(() {
+
+    });
   }
 
   @override
@@ -38,25 +41,22 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: <Widget>[
           IconButton(
               icon: _searchIcon,
-              onPressed: () {
+              onPressed: (){
                 setState(() {
                   if (search) {
-                    search = false;
-                    this._searchIcon =
-                        new Icon(Icons.close, color: Colors.white);
+                    search=false;
+                    this._searchIcon = new Icon(Icons.close, color: Colors.white);
                     this._appBarTitle = new TextField(
                       controller: _search,
                       decoration: new InputDecoration(
-                        prefixIcon: new Icon(EvaIcons.searchOutline,
-                            color: Colors.white),
+                        prefixIcon: new Icon(EvaIcons.searchOutline, color: Colors.white),
                         hintText: 'Search...',
                         hintStyle: TextStyle(color: Colors.white),
                       ),
                     );
                   } else {
-                    search = true;
-                    this._searchIcon =
-                        new Icon(EvaIcons.searchOutline, color: Colors.white);
+                    search=true;
+                    this._searchIcon = new Icon(EvaIcons.searchOutline, color: Colors.white);
                     this._appBarTitle = new Text('Movies App');
                     // filteredNames = names;
                     _search.clear();
@@ -67,16 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: ListView(
         children: <Widget>[
-          NowPlaying(),
-          GenresScreen(),
-          PersonsList(),
-          TopMovies(
-            query: _search.value.text,
-          ),
+
         ],
       ),
     );
   }
-
-  _listSearchedMovies() {}
 }

@@ -164,7 +164,7 @@ class _CastsState extends State<Casts> {
                       ),
                     ),
                     SizedBox(
-                      height: 10.0,
+                      height: 8.0,
                     ),
                     Text(
                       casts[index].character,
@@ -172,7 +172,7 @@ class _CastsState extends State<Casts> {
                       style: TextStyle(
                         color: Style.Colors.titleColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: 7.0,
+                        fontSize: 9.0,
                       ),
                     ),
                   ],
