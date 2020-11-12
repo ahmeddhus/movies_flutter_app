@@ -1,6 +1,10 @@
-# movies_flutter_app
+# MoviesApp
 
 A new Flutter application.
+
+
+![](ui/home.png) 
+![](ui/details.png)
 
 ## Getting Started
 
