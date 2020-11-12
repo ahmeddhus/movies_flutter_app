@@ -4,7 +4,7 @@ A new Flutter application.
 
 
 ![](ui/1.png) 
-![](ui/2.png)
+![](ui/2.png) 
 
 ## Getting Started
 
