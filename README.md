@@ -3,8 +3,8 @@
 A new Flutter application.
 
 
-![](ui/home.png) 
-![](ui/details.png)
+![](ui/1.png) 
+![](ui/2.png)
 
 ## Getting Started
 
